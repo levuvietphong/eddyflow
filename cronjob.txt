@@ -1,0 +1,1 @@
+00 12 * * * (echo "Backup started at $(date)"; /corral/utexas/CDA23001/water/eddycov/download_datalogger.sh; echo "Backup finished at $(date)") >> /corral/utexas/CDA23001/water/eddycov/screen.log 2>&1
