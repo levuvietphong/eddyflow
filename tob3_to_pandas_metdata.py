@@ -19,12 +19,13 @@ def load_data(fname):
 
 def main():
     var = 'MetData'
-    dst_dir = f'/Users/pvn/Library/CloudStorage/OneDrive-OakRidgeNationalLaboratory/Shared/Projects/SETx-FluxData/{var}'
-    src_dir = '/Users/pvn/Downloads/Download-2025-08-25'
+    dst_dir = f'../../decoded_data/{var}'
+    src_dir = '../../DataLogger/CRD/'
     cutoff = pd.Timestamp("2025-08-26 08:15:00")
+    os.makedirs(dst_dir, exist_ok=True)
 
     full_filenames = natsorted(glob.glob(os.path.join(src_dir, f'{var}*.dat')))
-    print(full_filenames)
+    # print(full_filenames)
     
     df_all = pd.DataFrame()
     for filename in full_filenames[0:]:

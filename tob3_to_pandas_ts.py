@@ -38,12 +38,13 @@ def load_data(fname):
 
 def main():
     var = 'ts_data'
-    dst_dir = f'/Users/pvn/Library/CloudStorage/OneDrive-OakRidgeNationalLaboratory/Shared/Projects/SETx-FluxData/{var}'
-    src_dir = '/Users/pvn/Downloads/Download-2025-08-25'
+    dst_dir = f'../../decoded_data/{var}'
+    src_dir = '../../DataLogger/CRD/'    
+    os.makedirs(dst_dir, exist_ok=True)
 
     full_filenames = natsorted(glob.glob(os.path.join(src_dir, f'{var}*.dat')))    
     df_all = pd.DataFrame()
-    for filename in full_filenames[29:]:
+    for filename in full_filenames[100:]:
         print(filename)
         df, meta = load_data(filename)
         if meta[3][7] == 'umol/mol':
@@ -59,7 +60,10 @@ def main():
         df_all = pd.concat([df_all, df], ignore_index=True)
 
     df_all['date'] = df_all["TIMESTAMP"].dt.date
-
+    # df_30min = df_all.resample('30T', on='TIMESTAMP').mean()
+    df_30min = df_all.resample("30T", on="TIMESTAMP").mean(numeric_only=True)
+    df_30min.reset_index(inplace=True)
+    
     for day, df_day in df_all.groupby('date'):
         # Check if the day includes the last timestamp of the day
         last_ts = df_day["TIMESTAMP"].max()
@@ -80,7 +84,7 @@ def main():
                 f.write(','.join(quoted_row) + '\n')
 
             df_day.drop(columns=['date'], inplace=True)  # remove helper column
-            formatted = df_day.copy()
+            formatted = df_day.copy(deep=False)
             for col in df_day.columns:
                 formatted[col] = df_day[col].apply(lambda x: format_value(x, is_timestamp=(col=="TIMESTAMP")))
 
@@ -102,6 +106,8 @@ def main():
             quoted_row = ['"{}"'.format(item) for item in row]
             f.write(','.join(quoted_row) + '\n')
 
+    file_output30 = os.path.join(dst_dir, f'{var}_30min_all.dat')
+    df_30min.to_csv(file_output30, index=False)
 
 if __name__ == "__main__":
     main()
