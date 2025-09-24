@@ -1,0 +1,9 @@
+.DS_Store
+_**/.DS_Store
+__MACOSX__/
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.vscode
+data/
