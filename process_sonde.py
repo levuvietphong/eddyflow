@@ -18,10 +18,10 @@ def load_data(fname):
 
 
 def main():
-    var = 'MetData'
+    var = 'SondeData'
     dst_dir = f'../../decoded_data/{var}'
     src_dir = '../../DataLogger/CRD/'
-    cutoff = pd.Timestamp("2025-08-26 08:15:00")
+    cutoff = pd.Timestamp("2025-10-06 00:00:00")
     os.makedirs(dst_dir, exist_ok=True)
     full_filenames = natsorted(glob.glob(os.path.join(src_dir, f'{var}*.dat')))
 
