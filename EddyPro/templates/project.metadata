@@ -281,12 +281,12 @@ instr_3_vertical_separation=10.00
 instr_3_vpath_length=1.0000
 
 [Project]
-creation_date=2025-08-08T16:06:46
+creation_date=
 end_date=
 file_name=/Users/pvn/research/data/EddyFlux/SETx/meta_setx.metadata
 id=
 ini_version=3.2.2
-last_change_date=2025-10-17T18:23:38
+last_change_date=
 start_date=
 sw_version=7.0.9
 title=
